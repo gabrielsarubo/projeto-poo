@@ -51,7 +51,11 @@ public final class Armazem {
         }
     }
 
-    public int consultar(MountainBike mountainBike) {
+    public MountainBike getMountainBike(int index) {
+        return vetMountainBike[index];
+    }
+
+    public int consultar(int codigoX) {
         /**
          * Indice:
          * [1] o while percorrera' por todo o vetor
@@ -70,8 +74,7 @@ public final class Armazem {
             // [2]
             if (vetMountainBike[i] != null) {
                 // [3]
-                if (mountainBike.getFabricacao().getCodFab() == vetMountainBike[i].getFabricacao().getCodFab()) {
-                    imprimir(mountainBike, i);
+                if (codigoX == vetMountainBike[i].getFabricacao().getCodFab()) {
                     sucesso = true;
                     break;
                 }
@@ -80,18 +83,16 @@ public final class Armazem {
         }
 
         if (sucesso) {
-            // System.out.println("Consulta realizada com sucesso!");
             // retorna o index onde o codigo foi encontrado (para utilizar este mesmo metodo)
             // em outras situacoes, como alterar, onde este metodo e' chamado e retorna o index
             // onde a bicicleta foi encontrada
             return i;
         } else {
-            System.out.println("Erro: nao foi encontrada nenhuma bicicleta com o codigo informado.");
             return -1;
         }
     }
 
-    public void alterar(MountainBike mountainBike) {
+    /*public void alterar(MountainBike mountainBike) {
         // [1] Chamar o metodo consultar() para exibir o dados do objeto na tela
         int i = consultar(mountainBike);
         if (i == -1) {
@@ -250,5 +251,5 @@ public final class Armazem {
         System.out.println("Velocidade: " + vetEBike[index].getVelocidade());
         System.out.println("Marcha: " + vetEBike[index].getMarcha());
         System.out.println("Bateria (kwh): " + vetEBike[index].getBateria());
-    }
+    }*/
 }
