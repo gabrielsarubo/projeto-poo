@@ -16,7 +16,7 @@ public final class Armazem {
     }
 
     // MOUNTAIN BIKE
-    public void inserir(MountainBike mountainBike) {
+    public boolean inserir(MountainBike mountainBike) {
         /** 
          * Funcionamento do metodo: o while ira' percorrer todas as posicoes do vetor procurando
          * por uma posicao vazia (null), se for encontrada, ele fara a insercao da bicicleta
@@ -45,9 +45,9 @@ public final class Armazem {
         }
         
         if (sucesso) {
-            // System.out.println("Bicicleta inserida com sucesso!");
+            return true;
         } else {
-            System.out.println("Espaco insuficiente no Armazem!");
+            return false;
         }
     }
 

@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * MBCadastro
@@ -58,9 +59,16 @@ public class MBCadastro extends Banco implements ActionListener {
 
         if (obj.equals(btnVoltar)) {MB mB = new MB(); mB.janMB.setVisible(true); janMBCadastro.dispose();}
         if (obj.equals(btnCadastrar)) {
-            System.out.println("btnCadastrar");
             mountainBike.getFabricacao().setCodFab(Integer.parseInt(txtCodFab.getText()));
-            armazem.inserir(mountainBike);
+            mountainBike.getFabricacao().setMarca(txtMarca.getText());
+            mountainBike.geraModelo(txtModelo.getText());
+            mountainBike.mudarCadencia(Integer.parseInt(txtCadencia.getText()));
+            mountainBike.setVelocidade(Integer.parseInt(txtVelo.getText()));
+            mountainBike.mudarMarcha(Integer.parseInt(txtMarcha.getText()));
+            mountainBike.setCorreiaExtra(txtCorreiaExtra.getText());
+            
+            if (armazem.inserir(mountainBike)) JOptionPane.showMessageDialog(null, "Bicicleta cadastrada com sucesso!");
+            else JOptionPane.showMessageDialog(null, "Bicicleta nao cadastrada: o armazem esta lotado!");
         }
         // if (obj.equals(btnCancelar))
     }
