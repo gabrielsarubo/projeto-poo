@@ -96,27 +96,11 @@ public final class Armazem {
         vetMountainBike[index] = mountainBike;
     }
 
-    /*public void excluir(MountainBike mountainBike) {
-        // [1] Chamar o metodo consultar() para exibir o dados do objeto na tela
-        int i = consultar(mountainBike);
-        if (i == -1) {
-            return;
-        }
-
-        // [2] Perguntar se o usuario gostaria de excluir aquele objeto
-        int resposta = 0;
-        resposta = leitura.entDadosInt("\n> Digite 0 para excluir e 1 para nao excluir o objeto: ");
-
-        if (resposta == 0) {
-            // "excluir" o objeto que esta dentro do vetor atribuindo a ele o valor null
-            vetMountainBike[i] = null;
-            System.out.println("Aviso: Objeto excluido com sucesso!");
-        } else {
-            System.out.println("Aviso: Voce optou por nao excluir o objeto.");
-        }
+    public void excluir(int index) {
+        vetMountainBike[index] = null;
     }
 
-    public void imprimir(MountainBike mountainBike, int index) {
+    /*public void imprimir(MountainBike mountainBike, int index) {
         System.out.println("Codigo de fabricacao: " + vetMountainBike[index].getFabricacao().getCodFab());
         System.out.println("Marca: " + vetMountainBike[index].getFabricacao().getMarca());
         System.out.println("Modelo: " + vetMountainBike[index].getModelo());

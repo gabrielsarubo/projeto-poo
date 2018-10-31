@@ -72,10 +72,32 @@ public class MBExclui extends Banco implements ActionListener {
 
         if (obj.equals(btnVoltar)) {MB mB = new MB(); mB.janMB.setVisible(true); janMBExclui.dispose();}
         if (obj.equals(btnConsultar)) {
-            System.out.println("btnConsultar");
+            int codigoX = Integer.parseInt(txtPesquisa.getText());
+            
+            index = armazem.consultar(codigoX);
+            if (index == -1) {
+                System.out.println("Bicicleta nao encontrada!");
+                permissaoExcluir = false;
+                return;
+            }
+
+            mountainBike = armazem.getMountainBike(index);
+            setaEntradas();
+
+            permissaoExcluir = true;
         }
         if (obj.equals(btnExcluir)) {
-            System.out.println("btnExcluir");            
+            if (permissaoExcluir == true) {
+                int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que gostaria de excluir esta bicicleta?", "Confirmar Exclusao", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (opcao == 0) {
+                    armazem.excluir(index);
+                    JOptionPane.showMessageDialog(null, "A bicicleta foi excluida com sucesso!");
+                }
+                else if (opcao == 1) JOptionPane.showMessageDialog(null, "A operacao foi cancelada!");
+                else if (opcao == 2) JOptionPane.showMessageDialog(null, "A operacao foi cancelada!");
+            } else {
+                System.out.println("Para excluir e' necessario consultar uma bicicleta primeiro!");                
+            }          
         }
         // if (obj.equals(btnCancelar))
     }
