@@ -21,9 +21,14 @@ public final class EBike extends Bicicleta implements OperarBicicleta {
 
     // Sobrescrita do metodo geraModelo
     public void geraModelo(String modelo) {
-        // EB = E-bike
-        modelo = "EB" + modelo;
-        setModelo(modelo);
+        // previnir que gere um modelo com multiplos EB no inicio
+        if (modelo.charAt(0) == 'E' && modelo.charAt(1) == 'B') {
+            setModelo(modelo);
+        } else {
+            // EB = E-bike
+            modelo = "EB" + modelo;
+            setModelo(modelo);
+        }
     }
 
     // Implementacao da Interface "OperarBicicleta"

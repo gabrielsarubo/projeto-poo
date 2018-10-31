@@ -21,9 +21,14 @@ public final class MountainBike extends Bicicleta implements OperarBicicleta {
 
     // Sobrescrita do metodo geraModelo
     public void geraModelo(String modelo) {
-        // MO = MOuntain bike
-        modelo = "MO" + modelo;
-        setModelo(modelo);
+        // previnir que gere um modelo com multiplos MO no inicio
+        if (modelo.charAt(0) == 'M' && modelo.charAt(1) == 'O') {
+            setModelo(modelo);
+        } else {
+            // MO = MOuntain bike
+            modelo = "MO" + modelo;
+            setModelo(modelo);
+        }
     }
 
     // Implementacao da Interface "OperarBicicleta"
