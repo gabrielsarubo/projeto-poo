@@ -56,6 +56,11 @@ public class MB implements ActionListener{
             y.abreJanMBConsulta();
             janMB.setVisible(false);
         }
+        if (obj.equals(btnAlterar)) {
+            MBAltera z = new MBAltera();
+            z.abreJanMBAltera();
+            janMB.setVisible(false);
+        }
         // if (obj.equals(btnAlterar))
         // if (obj.equals(btnExcluir))
         if (obj.equals(btnVoltar)) {SistemaBike sistemaBike = new SistemaBike(); sistemaBike.janBemVindo.setVisible(true); janMB.dispose();}
