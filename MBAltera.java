@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -30,7 +31,13 @@ public class MBAltera extends Banco implements ActionListener {
     static JButton btnVoltar = new JButton("Voltar");
     static JButton btnCancelar = new JButton("Cancelar");
     static JButton btnConsultar = new JButton("Consultar");
+    static JButton btnEditar = new JButton("Editar");
+    static JButton btnAlterar = new JButton("Alterar");
 
+    static int index = -1;
+    static boolean permissaoEditar = false;
+    static boolean permissaoAlterar = false;
+    
     public void abreJanMBAltera() {
         janMBAltera.setSize(500, 500);
         janMBAltera.setLayout(new FlowLayout());
@@ -40,6 +47,7 @@ public class MBAltera extends Banco implements ActionListener {
         janMBAltera.add(lblPesquisa);
         janMBAltera.add(txtPesquisa);
         janMBAltera.add(btnConsultar);
+        janMBAltera.add(btnEditar);
 
         janMBAltera.add(lblCodFab); janMBAltera.add(txtCodFab);
         janMBAltera.add(lblMarca); janMBAltera.add(txtMarca);
@@ -49,11 +57,16 @@ public class MBAltera extends Banco implements ActionListener {
         janMBAltera.add(lblMarcha); janMBAltera.add(txtMarcha);
         janMBAltera.add(lblCorreiaExtra); janMBAltera.add(txtCorreiaExtra);
 
+        janMBAltera.add(btnAlterar);
         janMBAltera.add(btnCancelar);
+
+        entradaEditavel(false);
 
         btnVoltar.addActionListener(mBAltera);
         btnConsultar.addActionListener(mBAltera);
         btnCancelar.addActionListener(mBAltera);
+        btnEditar.addActionListener(mBAltera);
+        btnAlterar.addActionListener(mBAltera);
 
         janMBAltera.setDefaultCloseOperation(janMBAltera.EXIT_ON_CLOSE);
     }
@@ -65,15 +78,42 @@ public class MBAltera extends Banco implements ActionListener {
         if (obj.equals(btnConsultar)) {
             int codigoX = Integer.parseInt(txtPesquisa.getText());
             
-            int index = armazem.consultar(codigoX);
+            index = armazem.consultar(codigoX);
             if (index == -1) {
                 System.out.println("Bicicleta nao encontrada!");
+                permissaoEditar = false;
+                permissaoAlterar = false;
                 return;
             }
 
             mountainBike = armazem.getMountainBike(index);
 
             setaEntradas();
+            permissaoEditar = true;
+        }
+        if (obj.equals(btnEditar)) {
+            if (permissaoEditar == true) {
+                entradaEditavel(true);
+                permissaoAlterar = true;
+            } else {
+                System.out.println("Para editar e' necessario consultar uma bicicleta primeiro!");
+            }
+        }
+        if (obj.equals(btnAlterar)) {
+            if (permissaoAlterar == true) {
+                mountainBike.getFabricacao().setCodFab(Integer.parseInt(txtCodFab.getText()));
+                mountainBike.getFabricacao().setMarca(txtMarca.getText());
+                mountainBike.geraModelo(txtModelo.getText());
+                mountainBike.mudarCadencia(Integer.parseInt(txtCadencia.getText()));
+                mountainBike.setVelocidade(Integer.parseInt(txtVelo.getText()));
+                mountainBike.mudarMarcha(Integer.parseInt(txtMarcha.getText()));
+                mountainBike.setCorreiaExtra(txtCorreiaExtra.getText());
+
+                armazem.alterar(mountainBike, index);
+                JOptionPane.showMessageDialog(null, "Alteracoes realizadas com sucesso!");
+            } else {
+                System.out.println("Para alterar e' necessario editar uma bicicleta primeiro!");                
+            }
         }
         // if (obj.equals(btnCancelar))
     }
@@ -86,5 +126,15 @@ public class MBAltera extends Banco implements ActionListener {
         txtVelo.setText(Integer.toString(mountainBike.getVelocidade()));
         txtMarcha.setText(Integer.toString(mountainBike.getMarcha()));
         txtCorreiaExtra.setText(mountainBike.getCorreiaExtra());
+    }
+
+    public void entradaEditavel(boolean b) {
+        txtCodFab.setEditable(b);
+        txtMarca.setEditable(b);
+        txtModelo.setEditable(b);
+        txtCadencia.setEditable(b);
+        txtVelo.setEditable(b);
+        txtMarcha.setEditable(b);
+        txtCorreiaExtra.setEditable(b);
     }
 }

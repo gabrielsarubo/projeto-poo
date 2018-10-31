@@ -92,37 +92,11 @@ public final class Armazem {
         }
     }
 
-    /*public void alterar(MountainBike mountainBike) {
-        // [1] Chamar o metodo consultar() para exibir o dados do objeto na tela
-        int i = consultar(mountainBike);
-        if (i == -1) {
-            return;
-        }
-
-        // [2] Perguntar se o usuario gostaria de alterar os valores do objeto
-        int resposta = 0;
-        System.out.println("\n# Informe 0 para alterar as informacoes e 1 para cancelar a operacao.");
-        resposta = leitura.entDadosInt("> Digite aqui sua resposta: ");
-
-        if (resposta == 0) {
-            // Usuario gostaria de alterar, chamar alteracao de valores
-            // alterar os valores diretamente na posicao do vetor onde
-            // esta a bicicleta que eu quero encontrar
-            System.out.println("\n# Abaixo, cadastre os novos valores:");
-            vetMountainBike[i].getFabricacao().setCodFab(leitura.entDadosInt("> Informe o codigo de fabricacao: "));
-            vetMountainBike[i].getFabricacao().setMarca(leitura.entDados("> Informe a marca: "));
-            vetMountainBike[i].geraModelo(leitura.entDados("> Informe o modelo: "));
-            vetMountainBike[i].mudarCadencia(leitura.entDadosInt("> Informe a cadencia: "));
-            vetMountainBike[i].setVelocidade(leitura.entDadosInt("> Informe a velocidade: "));
-            vetMountainBike[i].mudarMarcha(leitura.entDadosInt("> Informe a marcha: "));
-            vetMountainBike[i].setCorreiaExtra(leitura.entDados("> Informe se existe uma correia extra: "));
-        } else {
-            // Usuario NAO gostaria de alterar, terminar 
-            System.out.println("Operacao cancelada! Nenhum valor foi modificado.");
-        }
+    public void alterar(MountainBike mountainBike, int index) {
+        vetMountainBike[index] = mountainBike;
     }
 
-    public void excluir(MountainBike mountainBike) {
+    /*public void excluir(MountainBike mountainBike) {
         // [1] Chamar o metodo consultar() para exibir o dados do objeto na tela
         int i = consultar(mountainBike);
         if (i == -1) {
