@@ -74,7 +74,7 @@ public class MBExclui extends Banco implements ActionListener {
         if (obj.equals(btnConsultar)) {
             int codigoX = Integer.parseInt(txtPesquisa.getText());
             
-            index = armazem.consultar(codigoX);
+            index = armazem.consultar(mountainBike, codigoX);
             if (index == -1) {
                 System.out.println("Bicicleta nao encontrada!");
                 permissaoExcluir = false;
@@ -90,7 +90,7 @@ public class MBExclui extends Banco implements ActionListener {
             if (permissaoExcluir == true) {
                 int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que gostaria de excluir esta bicicleta?", "Confirmar Exclusao", JOptionPane.YES_NO_CANCEL_OPTION);
                 if (opcao == 0) {
-                    armazem.excluir(index);
+                    armazem.excluir(mountainBike, index);
                     JOptionPane.showMessageDialog(null, "A bicicleta foi excluida com sucesso!");
                 }
                 else if (opcao == 1) JOptionPane.showMessageDialog(null, "A operacao foi cancelada!");

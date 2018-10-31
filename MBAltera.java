@@ -78,7 +78,7 @@ public class MBAltera extends Banco implements ActionListener {
         if (obj.equals(btnConsultar)) {
             int codigoX = Integer.parseInt(txtPesquisa.getText());
             
-            index = armazem.consultar(codigoX);
+            index = armazem.consultar(mountainBike, codigoX);
             if (index == -1) {
                 System.out.println("Bicicleta nao encontrada!");
                 permissaoEditar = false;

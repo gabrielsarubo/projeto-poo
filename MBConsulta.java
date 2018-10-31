@@ -56,7 +56,7 @@ public class MBConsulta extends Banco implements ActionListener {
 
             int codigoX = Integer.parseInt(txtPesquisa.getText());
             
-            int index = armazem.consultar(codigoX);
+            int index = armazem.consultar(mountainBike, codigoX);
             if (index == -1) {
                 System.out.println("Bicicleta nao encontrada!");
                 return;
