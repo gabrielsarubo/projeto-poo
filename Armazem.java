@@ -15,7 +15,6 @@ public final class Armazem {
 
     // MOUNTAIN BIKE
     public boolean inserir(MountainBike mountainBike) {
-        boolean sucesso = false;
         int i = 0;
         while (i < vetMountainBike.length) {
             if (vetMountainBike[i] == null) {
@@ -28,17 +27,12 @@ public final class Armazem {
                 vetMountainBike[i].setMarcha(mountainBike.getMarcha());
                 vetMountainBike[i].setCorreiaExtra(mountainBike.getCorreiaExtra());
 
-                sucesso = true;
-                break;
+                return true;
             }
             i++;
         }
         
-        if (sucesso) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 
     public MountainBike getMountainBike(int index) {
@@ -46,23 +40,17 @@ public final class Armazem {
     }
 
     public int consultar(MountainBike mountainBike, int codigoX) {
-        boolean sucesso = false;
         int i = 0;
         while (i < vetMountainBike.length) {
             if (vetMountainBike[i] != null) {
                 if (codigoX == vetMountainBike[i].getFabricacao().getCodFab()) {
-                    sucesso = true;
-                    break;
+                    return i;
                 }
             }
             i++;
         }
 
-        if (sucesso) {
-            return i;
-        } else {
-            return -1;
-        }
+        return -1;
     }
 
     public void alterar(MountainBike mountainBike, int index) {
