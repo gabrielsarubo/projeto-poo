@@ -37,6 +37,8 @@ public class MBExclui extends Banco implements ActionListener {
     static boolean permissaoExcluir = false;
     
     public void abreJanMBExclui() {
+        permissaoExcluir = false;
+    
         janMBExclui.setSize(500, 500);
         janMBExclui.setLayout(new FlowLayout());
         janMBExclui.setVisible(true);
@@ -57,7 +59,10 @@ public class MBExclui extends Banco implements ActionListener {
         janMBExclui.add(btnExcluir);
         janMBExclui.add(btnCancelar);
 
-        entradaEditavel(false);
+        txtFieldEditavel(false);
+        txtFieldLimpar();
+        txtPesquisa.setText("");
+        txtPesquisa.requestFocus();
 
         btnVoltar.addActionListener(mBExclui);
         btnConsultar.addActionListener(mBExclui);
@@ -70,49 +75,71 @@ public class MBExclui extends Banco implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         Object obj = evt.getSource();
 
-        if (obj.equals(btnVoltar)) {MB mB = new MB(); mB.janMB.setVisible(true); janMBExclui.dispose();}
+        if (obj.equals(btnVoltar) || obj.equals(btnCancelar)) {MB mB = new MB(); mB.janMB.setVisible(true); janMBExclui.dispose();}
         if (obj.equals(btnConsultar)) {
-            int codigoX = Integer.parseInt(txtPesquisa.getText());
-            
-            index = armazem.consultar(mountainBike, codigoX);
-            if (index == -1) {
-                System.out.println("Bicicleta nao encontrada!");
-                permissaoExcluir = false;
-                return;
+            if (permissaoConsultar()) {
+                txtFieldLimpar();
+
+                int codigoX = Integer.parseInt(txtPesquisa.getText());
+                
+                index = armazem.consultar(mountainBike, codigoX);
+                if (index == -1) {
+                    JOptionPane.showMessageDialog(null, "Nao foi encontrada nenhuma bicicleta com o codigo informado.");
+                    txtPesquisa.setText("");
+                    txtPesquisa.requestFocus();
+                    permissaoExcluir = false;
+                    return;
+                }
+
+                mountainBike = armazem.getMountainBike(index);
+                
+                permissaoExcluir = true;
+
+                txtFieldPopular();
+                btnExcluir.requestFocus();
             }
-
-            mountainBike = armazem.getMountainBike(index);
-            setaEntradas();
-
-            permissaoExcluir = true;
         }
         if (obj.equals(btnExcluir)) {
             if (permissaoExcluir == true) {
                 int opcao = JOptionPane.showConfirmDialog(null, "Tem certeza que gostaria de excluir esta bicicleta?", "Confirmar Exclusao", JOptionPane.YES_NO_CANCEL_OPTION);
+                
                 if (opcao == 0) {
                     armazem.excluir(mountainBike, index);
                     JOptionPane.showMessageDialog(null, "A bicicleta foi excluida com sucesso!");
                 }
                 else if (opcao == 1) JOptionPane.showMessageDialog(null, "A operacao foi cancelada!");
                 else if (opcao == 2) JOptionPane.showMessageDialog(null, "A operacao foi cancelada!");
-            } else {
-                System.out.println("Para excluir e' necessario consultar uma bicicleta primeiro!");                
-            }          
+
+                txtFieldLimpar();
+                txtFieldEditavel(false);
+                permissaoExcluir = false;
+                txtPesquisa.setText("");
+                txtPesquisa.requestFocus();
+            }        
         }
-        // if (obj.equals(btnCancelar))
     }
 
-    public void setaEntradas() {
-        txtCodFab.setText(Integer.toString(mountainBike.getFabricacao().getCodFab()));
+    public void txtFieldLimpar() {
+        txtCodFab.setText("");
+        txtMarca.setText("");
+        txtModelo.setText("");
+        txtCadencia.setText("");
+        txtVelo.setText("");
+        txtMarcha.setText("");
+        txtCorreiaExtra.setText("");
+    }
+
+    public void txtFieldPopular() {
+        txtCodFab.setText("" + mountainBike.getFabricacao().getCodFab());
         txtMarca.setText(mountainBike.getFabricacao().getMarca());
         txtModelo.setText(mountainBike.getModelo());
-        txtCadencia.setText(Integer.toString(mountainBike.getCadencia()));
-        txtVelo.setText(Integer.toString(mountainBike.getVelocidade()));
-        txtMarcha.setText(Integer.toString(mountainBike.getMarcha()));
+        txtCadencia.setText("" + mountainBike.getCadencia());
+        txtVelo.setText("" + mountainBike.getVelocidade());
+        txtMarcha.setText("" + mountainBike.getMarcha());
         txtCorreiaExtra.setText(mountainBike.getCorreiaExtra());
     }
 
-    public void entradaEditavel(boolean b) {
+    public void txtFieldEditavel(boolean b) {
         txtCodFab.setEditable(b);
         txtMarca.setEditable(b);
         txtModelo.setEditable(b);
@@ -120,5 +147,13 @@ public class MBExclui extends Banco implements ActionListener {
         txtVelo.setEditable(b);
         txtMarcha.setEditable(b);
         txtCorreiaExtra.setEditable(b);
+    }
+
+    public boolean permissaoConsultar() {
+        if (txtPesquisa.getText().isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

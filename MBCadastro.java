@@ -47,6 +47,9 @@ public class MBCadastro extends Banco implements ActionListener {
         janMBCadastro.add(btnCadastrar);
         janMBCadastro.add(btnCancelar);
 
+        txtCodFab.requestFocus();
+        limpaTxtFields();
+
         btnVoltar.addActionListener(mBCadastro);
         btnCancelar.addActionListener(mBCadastro);
         btnCadastrar.addActionListener(mBCadastro);
@@ -57,19 +60,45 @@ public class MBCadastro extends Banco implements ActionListener {
     public void actionPerformed(ActionEvent evt) {
         Object obj = evt.getSource();
 
-        if (obj.equals(btnVoltar)) {MB mB = new MB(); mB.janMB.setVisible(true); janMBCadastro.dispose();}
+        if (obj.equals(btnVoltar) || obj.equals(btnCancelar)) {MB mB = new MB(); mB.janMB.setVisible(true); janMBCadastro.dispose();}
         if (obj.equals(btnCadastrar)) {
-            mountainBike.getFabricacao().setCodFab(Integer.parseInt(txtCodFab.getText()));
-            mountainBike.getFabricacao().setMarca(txtMarca.getText());
-            mountainBike.geraModelo(txtModelo.getText());
-            mountainBike.mudarCadencia(Integer.parseInt(txtCadencia.getText()));
-            mountainBike.setVelocidade(Integer.parseInt(txtVelo.getText()));
-            mountainBike.mudarMarcha(Integer.parseInt(txtMarcha.getText()));
-            mountainBike.setCorreiaExtra(txtCorreiaExtra.getText());
+            if (permissaoCadastrar()) {
+                mountainBike.getFabricacao().setCodFab(Integer.parseInt(txtCodFab.getText()));
+                mountainBike.getFabricacao().setMarca(txtMarca.getText());
+                mountainBike.geraModelo(txtModelo.getText());
+                mountainBike.mudarCadencia(Integer.parseInt(txtCadencia.getText()));
+                mountainBike.setVelocidade(Integer.parseInt(txtVelo.getText()));
+                mountainBike.mudarMarcha(Integer.parseInt(txtMarcha.getText()));
+                mountainBike.setCorreiaExtra(txtCorreiaExtra.getText());
+                
+                if (armazem.inserir(mountainBike)) JOptionPane.showMessageDialog(null, "Bicicleta cadastrada com sucesso!");
+                else JOptionPane.showMessageDialog(null, "Bicicleta nao cadastrada: o armazem esta lotado!");
+
+                limpaTxtFields();
+            } 
             
-            if (armazem.inserir(mountainBike)) JOptionPane.showMessageDialog(null, "Bicicleta cadastrada com sucesso!");
-            else JOptionPane.showMessageDialog(null, "Bicicleta nao cadastrada: o armazem esta lotado!");
+            txtCodFab.requestFocus();
         }
-        // if (obj.equals(btnCancelar))
+    }
+
+    public void limpaTxtFields() {
+        txtCodFab.setText("");
+        txtMarca.setText("");
+        txtModelo.setText("");
+        txtCadencia.setText("");
+        txtVelo.setText("");
+        txtMarcha.setText("");
+        txtCorreiaExtra.setText("");
+    }
+
+    public boolean permissaoCadastrar() {
+        if (txtCodFab.getText().isEmpty()) return false;
+        else if (txtMarca.getText().isEmpty()) return false;
+        else if (txtModelo.getText().isEmpty()) return false;
+        else if (txtCadencia.getText().isEmpty()) return false;
+        else if (txtVelo.getText().isEmpty()) return false;
+        else if (txtMarcha.getText().isEmpty()) return false;
+        else if (txtCorreiaExtra.getText().isEmpty()) return false;
+        else return true;
     }
 }
